@@ -391,7 +391,6 @@ class SchemaEmbeddingGenerator(object):
       emb_mat = schema_embeddings[output["service_id"]][tensor_name]
 
       # Obtain the encoding of the [CLS] token for last 4 layers only for intent_emb
-      layers = []
       layer_output = output["layer_output_%d" % 1]
       layer_output_flat = np.array([round(float(x), 6) for x in layer_output[0].flat])
       

@@ -9,6 +9,41 @@ The project currently uses the `Schema-Guided Dialogue State Tracking (DSTC 8)` 
 
 The project tries to improve on the baseline in terms of performance, smaller model, less training time.
 
+### Execution
+```bash
+pip install -r requirement.txt to install dependencies (Uses tensorflow gpu 1.15)
+```
+
+Following commands can be run for training, predictions using the associated split and then evaluate on the corresponding predictions.
+
+#### Training
+```bash
+python -m raspberry.train_and_predict \
+--model_ckpt_dir /data/models/albert/albert_base \
+--dstc8_data_dir /data/dataset/dstc8-schema-guided-dialogue \
+--output_base_dir /data/tasks/sgd/albert_base_vocaborg/single_domain \
+--dataset_split train --run_mode train --model_initial_qualifier 0 \
+--task_name dstc8_single_domain
+```
+#### Prediction
+```bash
+python -m raspberry.train_and_predict \
+--dstc8_data_dir /data/dataset/dstc8-schema-guided-dialogue \
+--output_base_dir /data/tasks/sgd/albert_base_vocaborg/single_domain \
+--model_ckpt_dir /data/models/albert/albert_base \
+--dataset_split dev --run_mode predict \
+--task_name dstc8_single_domain \
+--model_name albert-base-v2 \
+--eval_ckpt 103235
+```
+#### Evaluation
+```bash
+python -m evaluate \
+--dstc8_data_dir /data/dataset/dstc8-schema-guided-dialogue \
+--prediction_dir /data/tasks/sgd/albert_base_vocaborg/single_domain/predictions/pred_res_103235_dev_dstc8_single_domain_dstc8-schema-guided-dialogue \
+--output_metric_file /data/tasks/sgd/albert_base_vocaborg/single_domain/predictions/evaluations_103235.json \
+--eval_set dev
+```
 ### Initial commit:
 * Changelog
     - Integrate ALBERT model in place of BERT
