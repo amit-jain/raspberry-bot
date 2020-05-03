@@ -159,7 +159,7 @@ In some aborted experiments it was found that the model for DSTC8 was ~ 450 MB u
 * Plugging the model to a dialog system like RASA, DeepPavlov etc.
 
 ### 2nd Commit 
-[ae4cc3fe48477ece8ef0b9b1f6efce6b1da6efa6](https://github.com/amit-jain/raspberry-bot/tree/ae4cc3fe48477ece8ef0b9b1f6efce6b1da6efa6)
+[2cf28a3fc2ebfca170577574cc393b4c39990349](https://github.com/amit-jain/raspberry-bot/tree/2cf28a3fc2ebfca170577574cc393b4c39990349)
 * Changelog
     - Last 4 layers for schema embeddings
 * Performance with ALBERT
