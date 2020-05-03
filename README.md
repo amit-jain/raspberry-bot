@@ -44,7 +44,8 @@ python -m evaluate \
 --output_metric_file /data/tasks/sgd/albert_base_vocaborg/single_domain/predictions/evaluations_103235.json \
 --eval_set dev
 ```
-### Initial commit:
+### Initial commit - :
+[7aedfb9ea913b391619a1634222111e52b775cdb](https://github.com/amit-jain/raspberry-bot/tree/7aedfb9ea913b391619a1634222111e52b775cdb)
 * Changelog
     - Integrate ALBERT model in place of BERT
     - Some cosmetic changes to clean up
@@ -156,7 +157,10 @@ In some aborted experiments it was found that the model for DSTC8 was ~ 450 MB u
 * Data - The current experiments use only the single-domain data and training on the complete data presents more challenges but would better represent and generalize for real-world private datasets.
 * Plugging the model to a dialog system like RASA, DeepPavlov etc.
 
-### Commit with last 4 layers embeddings
+### 2nd Commit 
+[ae4cc3fe48477ece8ef0b9b1f6efce6b1da6efa6](https://github.com/amit-jain/raspberry-bot/tree/ae4cc3fe48477ece8ef0b9b1f6efce6b1da6efa6)
+* Changelog
+    - Last 4 layers for schema embeddings
 * Performance with ALBERT
 ```json
     "#ALL_SERVICES": {
