@@ -62,16 +62,16 @@ The project tries to improve on the baseline in terms of performance, smaller mo
     * ALBERT
     ```json
         "#ALL_SERVICES": {
-        "active_intent_accuracy": 0.8963782696177063,
-        "average_cat_accuracy": 0.6938607334157396,
-        "average_goal_accuracy": 0.7599752610674172,
-        "average_noncat_accuracy": 0.785797658429007,
-        "joint_cat_accuracy": 0.6873036407318426,
-        "joint_goal_accuracy": 0.4752380865526492,
-        "joint_noncat_accuracy": 0.5718519170020121,
-        "requested_slots_f1": 0.946385455590687,
-        "requested_slots_precision": 0.9920020120724347,
-        "requested_slots_recall": 0.9471830985915493
+            "active_intent_accuracy": 0.8963782696177063,
+            "average_cat_accuracy": 0.6938607334157396,
+            "average_goal_accuracy": 0.7599752610674172,
+            "average_noncat_accuracy": 0.785797658429007,
+            "joint_cat_accuracy": 0.6873036407318426,
+            "joint_goal_accuracy": 0.4752380865526492,
+            "joint_noncat_accuracy": 0.5718519170020121,
+            "requested_slots_f1": 0.946385455590687,
+            "requested_slots_precision": 0.9920020120724347,
+            "requested_slots_recall": 0.9471830985915493
         },
         "#SEEN_SERVICES": {
             "active_intent_accuracy": 0.9885367498314228,
