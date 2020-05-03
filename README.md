@@ -55,7 +55,7 @@ python -m evaluate \
     - BERT - 1.4 GB
     - ALBERT - 260 MB
 * Performance
-    - BERT
+    - *BERT*
     ```json
         "#ALL_SERVICES": {
             "active_intent_accuracy": 0.9678068410462777,
@@ -94,7 +94,7 @@ python -m evaluate \
             "requested_slots_recall": 0.9402935290193463
         }    
     ```
-    * ALBERT
+    * *ALBERT*
     ```json
         "#ALL_SERVICES": {
             "active_intent_accuracy": 0.8963782696177063,
@@ -134,9 +134,9 @@ python -m evaluate \
         }
     ```
  
-As seen above, the ALBERT model has fallen short of the baseline performance using the BERT base cased model. But it is able to deliver a 10% worse performance with a model which is smaller in size by a fifth. The model is uncompressed so, the actual compressed model maybe not show such a huge difference but still will be substantially smaller and would take 20% less time to train.
+As seen above, the model fine-tuned on ALBERT is underperforming slightly on some metrics, better on couple of metrics but major difference is in the performance of `active_intent_accuracy`. This underperformance is more significant in the unseen services as compared to the baseline performance using the BERT base cased model. But it is able to deliver this performance with a model which is smaller in size by a fifth. The model is uncompressed so, the actual compressed model maybe not show such a huge difference but will still be substantially smaller and would take 20% less time to train.
 
-The key points affecting performance:
+#### The key points affecting performance:
 * Unavailability of a `cased` pre-trained ALBERT model. The nature of the task is such that the case of the tokens is an important signal for the model. Thus, this limitation accords severe disadvantage to the model. But this has not been confirmed by experiments due to lack of time. A simple yet sure way to confirm the theory would be to use an uncased BERT model to compare performance.
 * Not related to performance but the initial experiments concentrated on integrating the HuggingFace transformers but using their pre-trained BERT/ALBERT models did not perform well at all due to a lurking bug in the implementations or an unknown configuration not not evident. This severly restricted the usage of other models from the repository available. Most promising of the models that were available is the DistillBert.
 
@@ -147,13 +147,14 @@ The various experiments performed:
     - Hybrid (Last 4 layers for intent and last layer for others) - Does much worse (Hard to analyze but could be a problem in the implementation).
     - Second last layer
 
-Future Work
+#### Future Work
 * Larger model - The above approaches once are made to work either way can be tried for original baseline BERT model.
 Another more promising avenue though is fine-tuning on the largers ALBERT pre-trained models e.g. ALBERT large, xlarge etc. Using these would still make for a substantially smaller model. Table 1 below shows comparison of the number of parameters for each.
 In some aborted experiments it was found that the model for DSTC8 was ~ 450 MB using ALBERT large as compared to BERT base.
 * Pre-trained ALBERT cased model - Getting hold off or pre-training a cased model should substantially improve performance as per current indications.
 * Classification layer - Using RNN, LSTM etc. in the classification layers might also push performance.
 * Data - The current experiments use only the single-domain data and training on the complete data presents more challenges but would better represent and generalize for real-world private datasets.
+* Plugging the model to a dialog system like RASA, DeepPavlov etc.
 
 Table 1
 
