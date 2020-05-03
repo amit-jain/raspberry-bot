@@ -156,6 +156,47 @@ In some aborted experiments it was found that the model for DSTC8 was ~ 450 MB u
 * Data - The current experiments use only the single-domain data and training on the complete data presents more challenges but would better represent and generalize for real-world private datasets.
 * Plugging the model to a dialog system like RASA, DeepPavlov etc.
 
+### Commit with last 4 layers embeddings
+* Performance with ALBERT
+```json
+    "#ALL_SERVICES": {
+        "active_intent_accuracy": 0.9386317907444668,
+        "average_cat_accuracy": 0.695879686856201,
+        "average_goal_accuracy": 0.7235660932389896,
+        "average_noncat_accuracy": 0.7392693455276642,
+        "joint_cat_accuracy": 0.6854555535021253,
+        "joint_goal_accuracy": 0.4359043450704225,
+        "joint_noncat_accuracy": 0.5367620487357478,
+        "requested_slots_f1": 0.9434727412091597,
+        "requested_slots_precision": 0.9888006611095144,
+        "requested_slots_recall": 0.9460093896713615
+    },
+    "#SEEN_SERVICES": {
+        "active_intent_accuracy": 0.9865138233310856,
+        "average_cat_accuracy": 0.8777829674606881,
+        "average_goal_accuracy": 0.8502706000348856,
+        "average_noncat_accuracy": 0.8619317545199899,
+        "joint_cat_accuracy": 0.8697657913413769,
+        "joint_goal_accuracy": 0.6358499662845584,
+        "joint_noncat_accuracy": 0.7222795010114632,
+        "requested_slots_f1": 0.9849966284558328,
+        "requested_slots_precision": 0.9898853674983142,
+        "requested_slots_recall": 0.987862440997977
+    },
+    "#UNSEEN_SERVICES": {
+        "active_intent_accuracy": 0.8912608405603736,
+        "average_cat_accuracy": 0.49133403361344535,
+        "average_goal_accuracy": 0.5955011900354366,
+        "average_noncat_accuracy": 0.6118872801798229,
+        "joint_cat_accuracy": 0.4851523332047821,
+        "joint_goal_accuracy": 0.23809289993328886,
+        "joint_noncat_accuracy": 0.35322476939959974,
+        "requested_slots_f1": 0.9023920709044125,
+        "requested_slots_precision": 0.9877275326408083,
+        "requested_slots_recall": 0.904603068712475
+    }
+```
+
 Table 1
 
 Model | Parameters | Layers | Hidden | Embedding | Parameter-sharing

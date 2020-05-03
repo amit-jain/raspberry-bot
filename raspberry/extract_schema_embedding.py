@@ -391,10 +391,13 @@ class SchemaEmbeddingGenerator(object):
       emb_mat = schema_embeddings[output["service_id"]][tensor_name]
 
       # Obtain the encoding of the [CLS] token for last 4 layers only for intent_emb
-      layer_output = output["layer_output_%d" % 1]
-      layer_output_flat = np.array([round(float(x), 6) for x in layer_output[0].flat])
+      layers = []
+      for (j, layer_index) in range([-1, -2, -3, -4]):
+        layer_output = output["layer_output_%d" % 1]
+        layer_output_flat = np.array([round(float(x), 6) for x in layer_output[0].flat])
+        layers.append(layer_output_flat)
       
-      embedding = layer_output_flat#sum(layers)[:data_utils.EMBEDDING_DIMENSION]
+      embedding = sum(layers)[:data_utils.EMBEDDING_DIMENSION]
 
       if tensor_name == "cat_slot_value_emb":
         emb_mat[output["intent_or_slot_id"], output["value_id"]] = embedding
