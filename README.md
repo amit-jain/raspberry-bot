@@ -144,7 +144,7 @@ As seen above, the model fine-tuned on ALBERT is underperforming slightly on som
 The various experiments performed:
 * Using the BERT cased vocabulary and fine-tuning with case on. Gives quite a bit of performance loss hence, the approach was disbanded.
 * Trying out different layers of the base ALBERT model for creating embeddings as suggested by authors of the BERT model. 
-    - Last 4 layers - This approach has shown promise and helped improve the `active_intent_accuracy` to 93.8% but performance on other metrics dropped noticeably.
+    - Last 4 layers - This approach has shown promise and helped improve the `active_intent_accuracy` to 93.8% but performance on various`goal_accuracy` and `noncat_accuracy` metrics dropped noticeably by 5% - 10%.
     - Hybrid (Last 4 layers for intent and last layer for others) - Does much worse (Hard to analyze but could be a problem in the implementation).
     - Second last layer
 
@@ -153,6 +153,7 @@ The various experiments performed:
 Another more promising avenue though is fine-tuning on the largers ALBERT pre-trained models e.g. ALBERT large, xlarge etc. Using these would still make for a substantially smaller model. Table 1 below shows comparison of the number of parameters for each.
 In some aborted experiments it was found that the model for DSTC8 was ~ 450 MB using ALBERT large as compared to BERT base.
 * Pre-trained ALBERT cased model - Getting hold off or pre-training a cased model should substantially improve performance as per current indications.
+* Incorporating and experimenting with various pooling strategies for the first token embeddings e.g. taking mean, max for the other layers.
 * Classification layer - Using RNN, LSTM etc. in the classification layers might also push performance.
 * Data - The current experiments use only the single-domain data and training on the complete data presents more challenges but would better represent and generalize for real-world private datasets.
 * Plugging the model to a dialog system like RASA, DeepPavlov etc.
