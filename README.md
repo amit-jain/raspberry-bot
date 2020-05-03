@@ -123,7 +123,7 @@ In some aborted experiments it was found that the model for DSTC8 was ~ 450 MB u
 Table 1
 
 Model | Parameters | Layers | Hidden | Embedding | Parameter-sharing
-:---:|:---:|:---:|:---:|:---:
+--- | --- | --- | --- | --- | ---
 BERT base | 108M | 12 | 768 | 768 | False
 BERT large | 334M | 24 | 1024 | 1024 | False
 ALBERT base | 12M | 12 | 768 | 128 | True
