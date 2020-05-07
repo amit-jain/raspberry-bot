@@ -132,20 +132,17 @@ def model_fn_builder(model_config, init_checkpoint, use_tpu,
     else:
       tf.train.init_from_checkpoint(init_checkpoint, assignment_map)
 
-    predictions = {}
-
     all_layers = model.get_all_encoder_layers()
 
+    predictions = {}
+
     for (i, layer_index) in enumerate([-1,-2,-3,-4]):
-      predictions["layer_output_%d" % i] = all_layers[layer_index]  
+      predictions["layer_output_%d" % i] = all_layers[layer_index]
 
     # Add input features containing identity of the input sequence.
     for feature in ["embedding_tensor_name", "service_id", "intent_or_slot_id",
                     "value_id"]:
       predictions[feature] = features[feature]
-
-    # Use the embedding obtained from the final layer.
-    #predictions["final_layer"] = all_layers[-1]
 
     output_spec = tf.estimator.tpu.TPUEstimatorSpec(
         mode=mode, predictions=predictions, scaffold_fn=scaffold_fn)
@@ -386,19 +383,17 @@ class SchemaEmbeddingGenerator(object):
       if service not in completed_services:
         tf.logging.info("Generating embeddings for service %s.", service)
         completed_services.add(service)
-      
+        
       tensor_name = output["embedding_tensor_name"].decode("utf-8")
       emb_mat = schema_embeddings[output["service_id"]][tensor_name]
 
       # Obtain the encoding of the [CLS] token for last 4 layers
       layers = []
       for (j, layer_index) in enumerate([-1, -2, -3, -4]):
-        layer_output = output["layer_output_%d" % j]
-        layer_output_flat = np.array([round(float(x), 6) for x in layer_output[0].flat])
+        layer_output_flat = np.array([round(float(x), 6) for x in output["layer_output_%d" % j][0].flat])
         layers.append(layer_output_flat)
-      
       embedding = sum(layers)[:data_utils.EMBEDDING_DIMENSION]
-
+            
       if tensor_name == "cat_slot_value_emb":
         emb_mat[output["intent_or_slot_id"], output["value_id"]] = embedding
       else:

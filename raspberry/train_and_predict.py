@@ -718,7 +718,7 @@ def _create_dialog_examples(processor, dial_file):
 
 
 def _create_schema_embeddings(model_config, schema_embedding_file, model_init_ckpt, 
-    vocab_file="vocab.txt", spm_model_file="30k-clean.model"):
+    vocab_file="vocab.txt", spm_model_file=None):
   """Create schema embeddings and save it into file."""
   schema_embedding_dir = os.path.join(FLAGS.output_base_dir, FLAGS.schema_embedding_dir)
 
@@ -750,7 +750,7 @@ def _create_schema_embeddings(model_config, schema_embedding_file, model_init_ck
       predict_batch_size=FLAGS.predict_batch_size)
 
   tokenizer = tokenization.FullTokenizer(
-      vocab_file=vocab_file, spm_model_file=spm_model_file, do_lower_case=FLAGS.do_lower_case)
+      vocab_file=vocab_file, spm_model_file=None, do_lower_case=FLAGS.do_lower_case)
   emb_generator = extract_schema_embedding.SchemaEmbeddingGenerator(
       tokenizer, schema_emb_estimator, FLAGS.max_seq_length)
   emb_generator.save_embeddings(schemas, schema_embedding_file)
@@ -759,8 +759,7 @@ def _create_schema_embeddings(model_config, schema_embedding_file, model_init_ck
 def main(_):
   tf.io.gfile.makedirs(FLAGS.output_base_dir)
 
-  vocab_file = os.path.join(FLAGS.model_ckpt_dir, "vocab.txt")
-  spm_model_file = os.path.join(FLAGS.model_ckpt_dir, "30k-clean.model")
+  vocab_file = os.path.join(FLAGS.model_ckpt_dir, "30k-clean.vocab")
   ckpt_dir = os.path.join(FLAGS.output_base_dir, FLAGS.checkpoint_dir)
   tf.io.gfile.makedirs(ckpt_dir)
 
@@ -782,7 +781,7 @@ def main(_):
       dev_file_range=data_utils.FILE_RANGES[task_name]["dev"],
       test_file_range=data_utils.FILE_RANGES[task_name]["test"],
       vocab_file=vocab_file,
-      spm_model_file=spm_model_file,
+      spm_model_file=None,
       do_lower_case=FLAGS.do_lower_case,
       max_seq_length=FLAGS.max_seq_length,
       log_data_warnings=FLAGS.log_data_warnings)
@@ -811,7 +810,7 @@ def main(_):
   if (not tf.io.gfile.exists(schema_embedding_file) or
       FLAGS.overwrite_schema_emb_file):
     tf.compat.v1.logging.info("Start generating the schema embeddings.")
-    _create_schema_embeddings(model_config, schema_embedding_file, model_init_ckpt, vocab_file=spm_model_file, spm_model_file=spm_model_file)
+    _create_schema_embeddings(model_config, schema_embedding_file, model_init_ckpt, vocab_file=vocab_file, spm_model_file=None)
     tf.compat.v1.logging.info("Finish generating the schema embeddings.")
 
   tpu_cluster_resolver = None

@@ -5,13 +5,28 @@ Team: Amit Jain, Cyril Chiffot
 This project initially created as submission for the final project of Stanford Natural Lanfuage Understanding Course([XCS224U](https://online.stanford.edu/courses/xcs224u-natural-language-understanding))
 
 The project aims to create a milti-domain task oriented dialog bot.
-The project currently uses the `Schema-Guided Dialogue State Tracking (DSTC 8)` dataset defined in https://github.com/google-research-datasets/dstc8-schema-guided-dialogue.
+The project currently uses the `Schema-Guided Dialogue State Tracking (DSTC 8)` dataset defined in https://github.com/google-research-datasets/dstc8-schema-guided-dialogue. The dataset can be directly downloaded from the link above.
 
 The project tries to improve on the baseline in terms of performance, smaller model, less training time.
-
-### Execution
+The commands below assume either repository cloned or unzipped at a location and working directory is  that folder. e.g.
 ```bash
-pip install -r requirement.txt to install dependencies (Uses tensorflow gpu 1.15)
+cd raspberry-bot
+```
+### Pre-requisites
+#### Download Data
+```bash
+git clone https://github.com/google-research-datasets/dstc8-schema-guided-dialogue.git "./data/dataset"
+```
+#### Download Pre-trained model
+```bash
+wget "https://storage.googleapis.com/albert_models/albert_base_v2.tar.gz" -P "./data/models/albert/albert_base"
+
+tar -xzvf "./data/models/albert/albert_base_v2.tar.gz" -C "./data/models/albert/"
+```
+### Execution
+To install dependencies (Uses tensorflow gpu 1.15)
+```bash
+pip install -r requirement.txt
 ```
 
 Following commands can be run for training, predictions using the associated split and then evaluate on the corresponding predictions.
@@ -19,18 +34,18 @@ Following commands can be run for training, predictions using the associated spl
 #### Training
 ```bash
 python -m raspberry.train_and_predict \
---model_ckpt_dir /data/models/albert/albert_base \
---dstc8_data_dir /data/dataset/dstc8-schema-guided-dialogue \
---output_base_dir /data/tasks/sgd/albert_base_vocaborg/single_domain \
---dataset_split train --run_mode train --model_initial_qualifier 0 \
+--model_ckpt_dir ./data/models/albert/albert_base \
+--dstc8_data_dir ./data/dataset/dstc8-schema-guided-dialogue \
+--output_base_dir ./data/tasks/sgd/albert_base/single_domain \
+--dataset_split train --run_mode train \
 --task_name dstc8_single_domain
 ```
 #### Prediction
 ```bash
 python -m raspberry.train_and_predict \
---dstc8_data_dir /data/dataset/dstc8-schema-guided-dialogue \
---output_base_dir /data/tasks/sgd/albert_base_vocaborg/single_domain \
---model_ckpt_dir /data/models/albert/albert_base \
+--dstc8_data_dir ./data/dataset/dstc8-schema-guided-dialogue \
+--output_base_dir ./data/tasks/sgd/albert_base/single_domain \
+--model_ckpt_dir ./data/models/albert/albert_base \
 --dataset_split dev --run_mode predict \
 --task_name dstc8_single_domain \
 --model_name albert-base-v2 \
@@ -39,9 +54,9 @@ python -m raspberry.train_and_predict \
 #### Evaluation
 ```bash
 python -m evaluate \
---dstc8_data_dir /data/dataset/dstc8-schema-guided-dialogue \
---prediction_dir /data/tasks/sgd/albert_base_vocaborg/single_domain/predictions/pred_res_103235_dev_dstc8_single_domain_dstc8-schema-guided-dialogue \
---output_metric_file /data/tasks/sgd/albert_base_vocaborg/single_domain/predictions/evaluations_103235.json \
+--dstc8_data_dir ./data/dataset/dstc8-schema-guided-dialogue \
+--prediction_dir ./data/tasks/sgd/albert_base/single_domain/predictions/pred_res_103235_dev_dstc8_single_domain_dstc8-schema-guided-dialogue \
+--output_metric_file ./data/tasks/sgd/albert_base/single_domain/predictions/evaluations_103235.json \
 --eval_set dev
 ```
 ### Initial commit - :
